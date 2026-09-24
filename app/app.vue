@@ -1,5 +1,8 @@
 <template>
+<div class="page-blob blob-a" aria-hidden="true"></div>
+<div class="page-blob blob-b" aria-hidden="true"></div>
 <header ref="headerEl" :class="{ scrolled: isScrolled }">
+<link href='https://fonts.googleapis.com/css?family=Noto Sans Thai' rel='stylesheet'>
   <nav class="nav">
     <a href="#" class="brand">SEEN<span>.</span></a>
     <div class="nav-links">
@@ -17,9 +20,16 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <div class="eyebrow">Digital Marketing Studio</div>
-        <h1>ตามยุคตลาดออนไลน์ให้ทันโลก</h1>
-        <p>เราคือทีมการตลาดดิจิทัลที่ดูแลแบรนด์คุณตั้งแต่ผลการค้นหาบน Google คำตอบจาก AI ไปจนถึงฟีดโซเชียลที่ลูกค้าเลื่อนผ่านทุกวัน ให้ทุกจุดที่คนเจอแบรนด์คุณ นำไปสู่การตัดสินใจซื้อ</p>
+        <div class="eyebrow hero-sub-reveal">Digital Marketing Studio</div>
+        <h1 class="hero-heading">
+          <span
+            v-for="(ch, i) in heroChars"
+            :key="i"
+            class="char-reveal"
+            :style="{ animationDelay: (i * 0.04) + 's' }"
+          >{{ ch }}</span>
+        </h1>
+        <p class="hero-sub-reveal">เราคือทีมการตลาดดิจิทัลที่ดูแลแบรนด์คุณตั้งแต่ผลการค้นหาบน Google คำตอบจาก AI ไปจนถึงฟีดโซเชียลที่ลูกค้าเลื่อนผ่านทุกวัน ให้ทุกจุดที่คนเจอแบรนด์คุณ นำไปสู่การตัดสินใจซื้อ</p>
         <div class="cta-row">
           <a href="#contact" class="button-ui1">คุยงานกับเรา</a>
           <a href="#portfolio" class="btn-secondary">ดูผลงาน</a>
@@ -311,21 +321,16 @@
               <svg viewBox="0 0 24 24"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.346 0 .63.285.63.63 0 .349-.284.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .345-.283.63-.63.63-.349 0-.631-.285-.631-.63V8.108c0-.271.174-.51.433-.596.062-.022.132-.032.198-.032.211 0 .39.09.51.25l2.443 3.317V8.108c0-.345.283-.63.63-.63.349 0 .631.285.631.63v4.771zm-5.741 0c0 .345-.282.63-.627.63-.349 0-.63-.285-.63-.63V8.108c0-.345.281-.63.63-.63.345 0 .627.285.627.63v4.771zm-2.466.629H4.908c-.345 0-.63-.285-.63-.63V8.108c0-.345.285-.63.63-.63.349 0 .63.285.63.63v4.141h1.756c.345 0 .629.283.629.63 0 .344-.284.629-.629.629M24 10.311C24 4.613 18.622 0 12 0S0 4.613 0 10.311c0 5.05 4.593 9.273 10.78 10.021.421.076.991.235 1.135.541.13.278.085 1..042 1.396-.137 1.205-.623 4.473-.755 5.295-.084.526-.39 2.056 1.702 1.121 2.092-.935 11.272-6.64 15.378-11.398 1.171-1.378 1.718-2.775 1.718-4.078z"/></svg>
             </a>
             <!-- Phone / เบอร์โทร -->
-            <div class="phone-toggle-container">
-
-  <a href="tel:02xxxxxxx" class="social-phone-btn" aria-label="Phone" onclick="togglePhone(event, this)">
-
+            <div class="phone-toggle-container" :class="{ active: phoneOpen }">
+  <a href="tel:094-842-3533" class="social-phone-btn" aria-label="Phone" @click.prevent="phoneOpen = !phoneOpen">
     <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-
   </a>
-
-  <span class="phone-number">02-XXX-XXXX</span>
-
+  <span class="phone-number">094-842-3533</span>
 </div>
           </div>
         </div>
         <!-- ฝั่งขวา: ปุ่มกด -->
-        <a href="#" class="bubble-btn">แอดไลน์คุยงาน</a>
+        <a href="https://line.me/ti/p/OY9fYjbmgS" class="bubble-btn">แอดไลน์คุยงาน</a>
       </div>
     </div>
   </div>
@@ -364,22 +369,19 @@ function closeLightbox(){
   lightboxSrc.value = null
 }
 function togglePhone(event, element) {
-
+  event.preventDefault(); // ป้องกันไม่ให้เปิดหน้าต่างหาแอป
   const container = element.closest('.phone-toggle-container');
-
-  
-
-  // ถ้ายังไม่ได้เปิด ให้เปิดดูก่อน (ยังไม่เด้งโทรออกทันที)
-
-  if (!container.classList.contains('active')) {
-
-    event.preventDefault();
-
-    container.classList.add('active');
-
-  } 
-
-  // ถ้าเปิดอยู่แล้วและคลิกที่ไอคอนซ้ำ จะปล่อยให้มันวิ่งไปโทรออกตามลิงก์ tel: ปกติ
-
+  container.classList.toggle('active'); // กดคลิกเพื่อเปิด/ปิดเบอร์
 }
+const phoneOpen = ref(false)
+
+const heroText = 'ตามยุคตลาดออนไลน์ให้ทันโลก'
+
+const heroChars = computed(() => {
+  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+    const seg = new Intl.Segmenter('th', { granularity: 'grapheme' })
+    return Array.from(seg.segment(heroText), s => s.segment)
+  }
+  return Array.from(heroText)
+})
 </script>
