@@ -16,7 +16,16 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap'
         }
-      ]
+        
+      ],
+      script: [
+      { src: 'https://www.tiktok.com/embed.js', async: true }
+    ]
+      
+      
     }
+    
+    
   }
+  
 })

@@ -105,7 +105,7 @@
   .signal-caption{ position:absolute; bottom:24px; left:28px; right:28px; font-size:0.85rem; color:var(--text-dim); border-top:1px solid var(--line); padding-top:16px; }
 
   /* section shared */
-  section{ padding:88px 0; }
+  section{ padding:48px 0; }
   .section-head{ margin-bottom:48px; max-width:56ch; }
   .section-head .kicker{ color:var(--text-dim); font-size:0.95rem; margin-bottom:10px; }
   .section-head h2{ font-size:clamp(1.7rem,3.4vw,2.4rem); }
@@ -164,14 +164,284 @@
 .service-tags span{ font-size:0.74rem; padding:4px 10px; border-radius:100px; border:1px solid var(--line); color:var(--text-dim); }
 
   /* portfolio */
-  .folio-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  @media(max-width:700px){ .folio-grid{ grid-template-columns:1fr; } }
-  .folio-card{ background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:28px; display:flex; flex-direction:column; gap:14px; }
-  .folio-tag{ font-size:0.78rem; font-weight:600; padding:5px 12px; border-radius:100px; width:fit-content; color:var(--bg); }
-  .folio-card h3{ font-size:1.2rem; font-weight:600; }
-  .folio-stat{ font-size:2rem; font-weight:700; font-family:'Chakra Petch',sans-serif; margin-top:auto; }
-  .folio-stat span{ font-size:0.85rem; font-weight:400; color:var(--text-dim); display:block; margin-top:4px; }
+.video-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:22px;
+  margin-top:36px;
+}
 
+.video-card{
+  position:relative;
+  display:block;
+  width:100%;
+  max-width:340px;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition:transform .25s ease;
+}
+
+.video-card{
+  position:relative;
+  display:block;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition:transform .25s ease;
+}
+.video-card:hover{ transform:translateY(-4px); }
+
+.video-card .bg{ position:absolute; inset:6px; background:rgba(30,23,48,0.6); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-radius:15px; outline:1px solid rgba(243,239,233,0.14); z-index:2; pointer-events:none; }
+.video-card .blob{ position:absolute; z-index:1; top:50%; left:50%; width:170px; height:170px; border-radius:50%; opacity:0.5; filter:blur(30px); animation:blob-bounce 10s infinite ease; }
+
+.video-card .video-wrap{ position:relative; z-index:3; padding:20px 20px 0; display:flex; justify-content:center; }
+.video-thumb{ position:relative; width:100%; max-width:280px; aspect-ratio:9/16; border-radius:12px; overflow:hidden; }
+.video-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+.play-btn{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:54px; height:54px; border-radius:50%;
+  background:rgba(21,15,31,0.55);
+  backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center;
+  transition:background .2s ease;
+}
+.video-card:hover .play-btn{ background:var(--accent-web); }
+.play-btn svg{ width:20px; height:20px; fill:#fff; margin-left:3px; }
+
+.video-card .video-caption{ position:relative; z-index:3; padding:18px 22px 22px; }
+.video-caption .tag{ display:inline-block; font-size:0.74rem; font-weight:600; padding:4px 10px; border-radius:100px; color:var(--bg); margin-bottom:10px; }
+.video-caption h3{ font-size:1.05rem; font-weight:600; margin-bottom:6px; color:var(--text); }
+.video-caption p{ color:var(--text-dim); font-size:0.88rem; }
+
+.portfolio-media{ display:flex; flex-wrap:wrap; gap:22px; margin-top:36px; align-items:flex-start; }
+
+.wide-stack{ display:flex; flex-direction:column; gap:22px; flex:1; min-width:280px; }
+
+.video-card.wide{ max-width:none; width:100%; }
+.video-thumb.wide{ max-width:none; width:100%; aspect-ratio:16/9; }
+.video-thumb.wide{ cursor: zoom-in; }
+
+.lightbox{
+  position:fixed; inset:0; z-index:9999;
+  background:rgba(10,7,16,0.92);
+  display:flex; align-items:center; justify-content:center;
+  padding:40px;
+  cursor:zoom-out;
+  animation:fadeIn .2s ease;
+}
+.lightbox img{
+  max-width:100%; max-height:100%;
+  border-radius:12px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+  cursor:default;
+}
+.lightbox-close{
+  position:absolute; top:24px; right:24px;
+  width:44px; height:44px; border-radius:50%;
+  background:rgba(255,255,255,0.1);
+  border:1px solid rgba(255,255,255,0.2);
+  color:#fff; font-size:1.6rem; line-height:1;
+  cursor:pointer;
+}
+@keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+/* กริดสำหรับ Art Work — เรียงข้างกันได้หลายชุด แล้ว wrap อัตโนมัติ */
+.artwork-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));
+  gap:22px;
+  margin-top:22px;
+}
+
+/* การ์ด artwork ไม่บังคับเต็มความกว้างแบบ .wide เดิม */
+.video-card.artwork{
+  max-width:none;
+  width:100%;
+}
+
+/* Layout: ภาพหลัก 2:3 (ซ้าย) + ภาพย่อย 1:1 x3 (ขวา) */
+.mosaic-2{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:6px;
+  width:100%;
+  aspect-ratio:1/1;
+}
+.mosaic-2-main{
+  position:relative;
+  overflow:hidden;
+  border-radius:8px;
+  cursor:zoom-in;
+}
+.mosaic-2-sub{
+  display:grid;
+  grid-template-rows:repeat(3, 1fr);
+  gap:6px;
+}
+.mosaic-2-item{
+  position:relative;
+  overflow:hidden;
+  border-radius:8px;
+  cursor:zoom-in;
+}
+.mosaic-2-main img,
+.mosaic-2-item img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .25s ease;
+}
+.mosaic-2-main:hover img,
+.mosaic-2-item:hover img{ transform:scale(1.06); }
+
+/* มือถือ: ให้เรียงคอลัมน์เดียว */
+@media (max-width: 600px){
+  .artwork-grid{
+    grid-template-columns:1fr;
+  }
+}
+/* กริดหลัก — 3 ชุดเรียงข้างกัน ถ้าจอแคบค่อย wrap ลงบรรทัดใหม่ */
+.artwork-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+
+@media (max-width: 900px){
+  .artwork-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px){
+  .artwork-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* การ์ดแต่ละชุด */
+.artwork-card{
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  transition: transform .25s ease;
+}
+.artwork-card:hover{ transform: translateY(-4px); }
+
+.artwork-card .bg{
+  position: absolute; inset: 6px;
+  background: rgba(30,23,48,0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 15px;
+  outline: 1px solid rgba(243,239,233,0.14);
+  z-index: 2;
+  pointer-events: none;
+}
+.artwork-card .blob{
+  position: absolute; z-index: 1; top: 50%; left: 50%;
+  width: 170px; height: 170px; border-radius: 50%;
+  opacity: 0.5; filter: blur(30px);
+  animation: blob-bounce 10s infinite ease;
+}
+
+/* ----------------------------------------- */
+/* โครงสร้างปกติ (ชุดที่ 2 และ 3: แนวตั้ง 2:3) */
+/* ----------------------------------------- */
+.artwork-wrap{
+  position: relative;
+  z-index: 3;
+  padding: 20px 20px 0;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 6px;
+}
+
+.artwork-main,
+.artwork-sub-item{
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: zoom-in;
+}
+
+.artwork-main img,
+.artwork-sub-item img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .25s ease;
+}
+
+.artwork-main:hover img,
+.artwork-sub-item:hover img{ transform: scale(1.06); }
+
+.artwork-main{ aspect-ratio: 2/3; }
+
+.artwork-sub{
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.artwork-sub-item{ aspect-ratio: 1/1; }
+
+/* ----------------------------------------- */
+/* เลย์เอาต์พิเศษ (ชุดที่ 1: ภาพหลักแนวนอน)     */
+/* ----------------------------------------- */
+.artwork-card.landscape .artwork-wrap{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.artwork-card.landscape .artwork-main{
+  width: 100%;
+  aspect-ratio: 1920 / 1280; /* สัดส่วนภาพหลักแนวนอนจริง */
+}
+
+.artwork-card.landscape .artwork-sub{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: none;
+  gap: 6px;
+}
+
+/* ----------------------------------------- */
+/* ส่วนข้อความใต้การ์ด                        */
+/* ----------------------------------------- */
+.artwork-caption{
+  position: relative;
+  z-index: 3;
+  padding: 18px 22px 22px;
+}
+
+.artwork-caption .tag{
+  display: inline-block;
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  color: var(--bg);
+  margin-bottom: 10px;
+}
+
+.artwork-caption h3{
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.artwork-caption p{
+  color: var(--text-dim);
+  font-size: 0.88rem;
+}
   /* process */
   .process-list{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; counter-reset:step; }
   @media(max-width:800px){ .process-list{ grid-template-columns:1fr 1fr; } }
@@ -183,9 +453,118 @@
   .process-item p{ color:var(--text-dim); font-size:0.92rem; }
 
   /* contact */
-  .contact-panel{ background:linear-gradient(135deg, var(--accent-web), #b91f45); border-radius:20px; padding:56px 40px; color:#1a0a10; display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap; }
-  .contact-panel h2{ font-size:clamp(1.6rem,3.6vw,2.2rem); max-width:16ch; color:#1a0a10; }
-  .contact-links{ display:flex; flex-direction:column; gap:6px; font-weight:500; }
-  .contact-panel .btn-primary{ background:#1a0a10; color:#F3EFE9; }
+/* ตัวหุ้มด้านนอก ทำหน้าที่สร้างความหนาของเส้นขอบและซ่อนส่วนเกิน */
+.contact-glow-wrap {
+  position: relative;
+  border-radius: 22px; /* ให้ใหญ่กว่าด้านในนิดนึง */
+  padding: 1px;        /* ความหนาของเส้นขอบเรืองแสง */
+  overflow: hidden;
+}
 
+/* แสงวิ่งวนด้านหลังขอบ */
+.contact-glow {
+  position: absolute;
+  inset: -200%;
+  background: conic-gradient(from 90deg at 50% 50%, #e7029a 0%, #f472b6 50%, #bd5fff 100%);
+  animation: magic-spin 4s linear infinite; /* ปรับเวลาให้ช้าลงนิดนึงจะได้ดูพรีเมียมขึ้น */
+}
+
+/* ตัวกล่องคอนเทนต์หลัก (ข้างใน) */
+.contact-glow-wrap {
+  position: relative;
+  border-radius: 22px;
+  padding: 1px;
+  overflow: hidden;
+}
+
+.contact-glow {
+  position: absolute;
+  inset: -200%;
+  background: conic-gradient(from 40deg at 50% 50%, #e7029a 30%, #f472b6 50%, #bd5fff 100%);
+  animation: magic-spin 4s linear infinite;
+}
+
+.contact-panel { 
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('../images/ctbg.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 21px; 
+  padding: 48px 40px; 
+  color: #ffffff; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  gap: 32px; 
+  flex-wrap: wrap; 
+}
+
+/* จัดกลุ่มฝั่งซ้าย (หัวข้อ บน / ไอคอน ล่าง) */
+.contact-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+}
+
+.contact-panel h2 { 
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem); 
+  color: #ffffff; 
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* แถวแสดงไอคอนโซเชียลด้านซ้ายล่าง */
+.contact-socials {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+.contact-socials a:hover {
+  background: var(--accent-creative, #e7029a);
+  transform: translateY(-3px);
+}
+
+.contact-socials svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+}
+
+.contact-panel .bubble-btn { 
+  background: #7d2ae8; 
+  color: #F3EFE9; 
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+  align-self: flex-end;
+}
+
+.contact-panel .bubble-btn:hover {
+  opacity: 0.9;
+}
+
+@keyframes magic-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
   footer{ padding:48px 0 calc(48px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--line); color:var(--text-dim); font-size:0.9rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+
+  
