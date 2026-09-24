@@ -111,7 +111,17 @@
   .section-head h2{ font-size:clamp(1.7rem,3.4vw,2.4rem); }
 
   /* services */
-.services{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; width: 75%; margin: 0 auto; }
+.services
+{ 
+  display:grid; 
+  grid-template-columns:repeat(3,1fr); 
+  gap:22px; 
+  max-width: 1200px;
+  width: 100%; 
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
 @media(max-width:900px){ .services{ grid-template-columns:1fr 1fr; } }
 @media(max-width:600px){ .services{ grid-template-columns:1fr; } }
 
@@ -544,6 +554,40 @@
   width: 20px;
   height: 20px;
   fill: #ffffff;
+}
+.phone-toggle-container {
+
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+
+}
+
+
+.phone-number {
+  max-width: 0;
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: max-width 0.4s ease, opacity 0.3s ease, margin-left 0.3s ease, padding 0.3s ease;
+  font-size: 0.9rem;
+  color: var(--text, #fff);
+  background: rgba(30, 23, 48, 0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 0 10px 10px 0;
+  pointer-events: none;
+}
+
+
+.phone-toggle-container.active .phone-number {
+  max-width: 150px;
+  opacity: 1;
+  margin-left: 8px;
+  padding: 6px 12px;
+  border: 1px solid rgba(243, 239, 233, 0.14);
+  pointer-events: auto;
 }
 
 .contact-panel .bubble-btn { 
