@@ -22,12 +22,16 @@
       <div>
         <div class="eyebrow hero-sub-reveal">Digital Marketing Studio</div>
         <h1 class="hero-heading">
-          <span
-            v-for="(ch, i) in heroChars"
-            :key="i"
-            class="char-reveal"
-            :style="{ animationDelay: (i * 0.04) + 's' }"
-          >{{ ch }}</span>
+          <template v-for="(word, wi) in heroWords" :key="wi">
+            <span class="word-wrap">
+              <span
+                v-for="(item, ci) in word"
+                :key="ci"
+                class="char-reveal"
+                :style="{ animationDelay: item.delay + 's' }"
+              >{{ item.char }}</span>
+            </span><wbr>
+          </template>
         </h1>
         <p class="hero-sub-reveal">เราคือทีมการตลาดดิจิทัลที่ดูแลแบรนด์คุณตั้งแต่ผลการค้นหาบน Google คำตอบจาก AI ไปจนถึงฟีดโซเชียลที่ลูกค้าเลื่อนผ่านทุกวัน ให้ทุกจุดที่คนเจอแบรนด์คุณ นำไปสู่การตัดสินใจซื้อ</p>
         <div class="cta-row">
@@ -377,11 +381,20 @@ const phoneOpen = ref(false)
 
 const heroText = 'ตามยุคตลาดออนไลน์ให้ทันโลก'
 
-const heroChars = computed(() => {
-  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
-    const seg = new Intl.Segmenter('th', { granularity: 'grapheme' })
-    return Array.from(seg.segment(heroText), s => s.segment)
-  }
-  return Array.from(heroText)
+const heroWords = computed(() => {
+  const charSeg = (typeof Intl !== 'undefined' && Intl.Segmenter)
+    ? new Intl.Segmenter('th', { granularity: 'grapheme' })
+    : null
+  let index = 0
+  return heroText.split(' ').map(word => {
+    const chars = charSeg
+      ? Array.from(charSeg.segment(word), c => c.segment)
+      : Array.from(word)
+    return chars.map(char => {
+      const item = { char, delay: index * 0.04 }
+      index++
+      return item
+    })
+  })
 })
 </script>

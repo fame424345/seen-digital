@@ -38,7 +38,15 @@
   img{ max-width:100%; display:block; }
   .wrap{ max-width:1140px; margin:0 auto; padding:0 24px; }
   @media(prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
-
+  .hero-heading .char-reveal{
+    display:inline-block;
+    opacity:0;
+    animation: word-fade-up 0.5s ease-out both;
+  }
+  .hero-heading .word-wrap{
+    display:inline-block;
+    white-space:nowrap;
+  }
   .page-blob{
   position:fixed;
   z-index:0;
